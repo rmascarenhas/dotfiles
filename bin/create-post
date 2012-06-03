@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+
+# Automates the creation of a new post in a Jekyll blog
+# Usage:
+#   $ create-post how to write an awesome post
+
+posts_dir = '_posts/'
+lang      = '.markdown'
+
+unless File.directory? posts_dir
+  puts 'Not a valid Jekyll directory.'
+  exit 1
+end
+
+unless ARGV.size > 0
+  puts 'No title given.'
+  exit 1
+end
+
+time = Time.now
+year = time.year.to_s
+month = "%02d" % time.month
+day = "%02d" % time.day
+date = year + '-' + month + '-' + day + '-'
+
+title = ARGV.map { |word| word.downcase }.join('-')
+humanized_title = ARGV.map { |word| word.capitalize }.join(' ')
+
+file_name = posts_dir + date + title + lang
+
+File.open(file_name, 'w') do |f|
+  f.write <<-END
+---
+layout: post
+title: #{humanized_title}
+---
+
+ZOMG WRITE THOSE DOWN!
+  END
+end
+
+Process.exec("#{ENV['EDITOR']} #{file_name}")

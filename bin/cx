@@ -1,0 +1,8 @@
+#!/bin/sh
+
+case "$0" in
+*cx) chmod +x "$@" ;;
+*cw) chmod +w "$@" ;;
+*c-w) chmod -w "$@" ;;
+*) echo "Whops! This should not be happening..." 1>&2; exit 1 ;;
+esac

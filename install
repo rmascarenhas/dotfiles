@@ -1,0 +1,125 @@
+#!/bin/sh
+
+# This is not a completely automatic install (as in: for each file, `ln -s` it
+# to your home directory) so that the repository itself is more organized.
+# Therefore, each directory must be restored in its own way.
+#
+# For Mac OS X users, call this script with the --skip-linux option.
+
+root=$PWD
+
+echo "Restoring..."
+
+if [[ "$1" = "--skip-linux" ]]; then
+    skip_linux=0
+    echo "Skipping Linux..."
+elif [[ ! -z "$1" ]]; then
+    echo "Unrecognized option: $1"
+else
+    echo "You can pass --skip-linux to avoid restoring Linux-specific files."
+fi
+
+# bash
+bash_home="$HOME/.bash"
+mkdir "$bash_home" 2>/dev/null
+cd "$bash_home"
+
+for file in aliases env functions options; do
+    ln -s "$root/bash/$file" .
+done
+
+cd "$HOME"
+for file in bashrc bash_profile bash_logout; do
+    ln -s "$root/bash/$file" ".$file"
+done
+
+
+# bin
+home_bin_path=.bin
+mkdir "$home_bin_path" 2>/dev/null
+cd "$home_bin_path"
+
+for file in "$root/bin/*"; do
+    ln -s "$file" "$(basename "$file")"
+done
+
+# git
+cd "$HOME"
+
+for file in "$root/git/*"; do
+    ln -s "$file" ".$(basename "$file")"
+done
+
+ruby -rerb -e "File.open('$HOME/.gitconfig', 'w') { |f|
+    f.write(ERB.new(File.read('$root/git/gitconfig.erb')).result)
+}"
+
+# rc
+cd "$HOME"
+
+for file in "$root/rc/*"; do
+    ln -s "$file" ".$(basename "$file")"
+done
+
+# tmux
+cd "$HOME"
+ln -s "$root/tmux/tmux.conf" .tmux.conf
+
+# vim
+cd "$HOME"
+mkdir .vim 2>/dev/null
+cd .vim
+
+for dir in colors ftplugin; do
+    ln -s "$root/vim/$dir" "$dir"
+done
+
+for file in "$root/vim/*.vim"; do
+    ln -s "$file" "$(basename "$file")"
+done
+
+ln -s "$root/vim/vimrc" .vimrc
+
+
+if [[ -n "$skip_linux" ]]; then
+    # config
+    cd "$HOME"
+    mkdir .config 2>/dev/null
+    cd .config
+    ln -s "$root/config/awesome" .
+
+
+    # moc
+    cd "$HOME"
+    mkdir .moc 2>/dev/null
+    cd .moc
+
+    for file in "$root/moc/*"; do
+        ln -s "$file" "$(basename "$file")"
+    done
+
+    # mplayer
+    cd "$HOME"
+    mkdir .mplayer 2>/dev/null
+    cd .mplayer
+
+    for file in "$root/mplayer/*"; do
+        ln -s "$file" "$(basename "$file")"
+    done
+
+    # mutt
+    cd "$HOME"
+    mkdir .mutt 2>/dev/null
+    cd .mutt
+
+    for file in "$root/mutt/*"; do
+        ln -s "$file" "$(basename "$file")"
+    done
+
+    # X
+    cd "$HOME"
+
+    for file in "$root/X/*"; do
+        ln -s "$file" ".$(basename "$file")"
+    done
+fi

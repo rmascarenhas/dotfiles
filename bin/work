@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Starts a tmux session by executing the contents of the .tmux-setup.sh file,
+# if available.
+
+tmux_file=".tmux-setup.sh"
+
+if [[ -e "$tmux_file" ]]; then
+    exec ./"$tmux_file"
+else
+    echo "tmux file "$tmux_file" not found!"
+    exit 1
+fi

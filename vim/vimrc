@@ -1,0 +1,44 @@
+set number
+syntax on
+
+set nocompatible
+set laststatus=2
+
+set mouse=a
+set incsearch
+
+set hlsearch
+set ruler
+
+filetype on
+filetype indent on
+filetype plugin on
+set expandtab
+set tabstop=4
+" set softtabstop=4
+set shiftwidth=4
+
+set t_Co=256
+let g:Powerline_symbols = 'unicode'
+
+" ack: better than grep
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+
+call pathogen#infect()
+
+set background=dark
+colorscheme solarized
+
+source ~/.vim/autocmd.vim
+source ~/.vim/xclip.vim
+
+let mapleader = ","
+
+" Shortcut to rapidly toggle `set list`
+nmap <leader>l :set list!<CR>
+ 
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ ,eol:¬
+
+" Use X clipboard
+set clipboard=unnamed

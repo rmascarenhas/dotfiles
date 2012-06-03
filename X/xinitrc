@@ -1,0 +1,20 @@
+#!/bin/sh
+
+syndaemon -t -k -i 1 -d &
+
+[ -f /etc/xprofile ] && . /etc/xprofile
+[ -f ~/.xprofile ] && . ~/.xprofile
+
+while true;
+do
+  awsetbg -r ~/Pictures/Wallpapers/InterfaceLift
+  sleep 5m
+done &
+
+xrdb -merge ~/.Xresources
+
+urxvtd &
+
+xmodmap ~/.xmodmaprc
+
+exec awesome

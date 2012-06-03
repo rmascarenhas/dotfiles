@@ -1,0 +1,11 @@
+--type-add
+ruby=slim,rabl
+--type-add
+js=json,tmpl,jst,ejs
+--type-add
+css=scss,sass
+--type-set
+markdown=md,markdown
+--ignore-dir=vendor/ruby
+--ignore-dir=log/
+--ignore-dir=tmp/

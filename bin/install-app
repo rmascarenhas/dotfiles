@@ -1,0 +1,69 @@
+#!/usr/bin/env ruby
+
+# Small script to "install" an app for local development using nginx + passenger.
+# Run this script inside a rails project and it will use the name of the current
+# directory as the app name. Or, pass an argument to be used as app name.
+#
+# After the script is finished, you can access your app at http://#{appname}
+#
+# It requires super user privileges since it modifies protected system files.
+
+def root?
+  !!Process::UID.grant_privilege(0)
+rescue
+  false
+end
+
+def app_name_from_pwd
+  File.basename(Dir.pwd)
+end
+
+# Lame check to see if we are in a Rails app
+def rails_app?
+  require Dir.pwd + '/config/environment'
+  !!defined? Rails
+rescue LoadError
+  false
+end
+
+BAREBONE_NGINX_SERVER_DECLARATION = <<-END
+server {
+  listen 80;
+  server_name **sn**;
+
+  root #{Dir.pwd + '/public'};
+  passenger_enabled on;
+  rails_env development;
+}
+END
+
+# HARD CODED CONF PATH ZOMG!!!1
+def create_server_info(app_name, conf_path='/opt/nginx/conf/apps')
+  filename = conf_path + "/#{app_name}.conf"
+
+  File.open(filename, 'w') do |f| 
+    f.write BAREBONE_NGINX_SERVER_DECLARATION.gsub('**sn**', app_name)
+  end
+end
+
+def append_host_name(app_name, hosts_file='/etc/hosts')
+  File.open(hosts_file, 'a') { |f| f.write "127.0.0.1\t#{app_name}" }
+end
+
+def die(msg)
+  puts msg
+  exit(1)
+end
+
+
+
+
+
+die("This program must be run with super user privileges.") unless root?
+
+app_name = ARGV[1] || app_name_from_pwd
+die("This isn't a Rails app, you liar!") unless rails_app?
+
+create_server_info(app_name)
+
+append_host_name(app_name)

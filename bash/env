@@ -1,0 +1,97 @@
+############ git integration ####################
+source ~/.git-completion.sh
+source ~/.git-flow-completion.sh
+
+export GIT_PS1_SHOWDIRTYSTATE=y
+export GIT_PS1_SHOWSTASHSTATE=y
+
+#export PS1='[\[\033[0;36m\]\u @ \[\033[0;33m\]\h\[\033[0;m\] \W]\[\e[0;35;49m\]$(__git_ps1 " [%s]")\[\e[0;0m\]\[\033[0;10m\] \$ '
+
+export PS1='\n\[\033[0;31m\][$$:$PPID - \j:\!]\[\033[1;30m\]\[\033[0;36m\] \
+\[\033[1;30m\][\[\033[0;34m\]\u \
+\[\033[0;32m\]+${SHLVL}\[\033[1;30m\]] \[\e[0;35;49m\]$(__git_ps1 "[%s]")\[\e[0;0m\]\[\033[0;10m\] \
+\[\033[1;37m\]\w\[\033[0;37m\] \n▸ '
+
+########## less colors to man pages #############
+
+export LESS_TERMCAP_mb=$(printf "\e[1;37m")
+export LESS_TERMCAP_md=$(printf "\e[1;37m")
+export LESS_TERMCAP_me=$(printf "\e[0m")
+export LESS_TERMCAP_se=$(printf "\e[0m")
+export LESS_TERMCAP_so=$(printf "\e[1;47;30m")
+export LESS_TERMCAP_ue=$(printf "\e[0m")
+export LESS_TERMCAP_us=$(printf "\e[0;36m")
+
+function env() {
+  exec /usr/bin/env "$@" | grep -v ^LESS_TERMCAP_
+}
+
+##################################################
+
+# auto completion when root
+complete -cf su  
+
+
+# RVM: load as a function
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+##################################################
+
+###################################################
+
+## Maven
+export M2_HOME=/opt/mvn
+export PATH=$PATH:~/.bin
+export JAVA_HOME=/usr/lib64/java/jre
+
+##################################################
+
+# Default editor
+export EDITOR=vim
+
+# export TERMCAP variable for 256-color support
+if [ -f ${HOME}/.termcap ]; then
+  TERMCAP=$(< ${HOME}/.termcap)
+  export TERMCAP
+fi
+
+##################################################
+
+# export LS_COLORS (at first, used for colorized
+# output of `tree`)
+if [ -x /usr/bin/dircolors ]; then
+
+  d=.dircolors
+  test -r $d && eval "$(dircolors $d)" || eval "`dircolors -b`"
+fi
+
+#################################################
+
+# Load tmuxinator
+# [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+
+#################################################
+
+# Always use Ruby warnings
+# export RUBYOPT=-w
+
+#################################################
+
+# Disable printing ^C in terminal
+stty sane
+stty -echoctl
+
+################################################
+
+# Always open music dir in moc
+alias mocp='mocp -m'
+
+#################################################
+
+# Do not save repetitions in bash_history
+export HISTCONTROL=ignoreboth
+
+################################################
+
+# Quick access to direct children of home directory
+export CDPATH=:$HOME

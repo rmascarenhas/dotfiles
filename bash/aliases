@@ -1,0 +1,95 @@
+alias ..='cd ..'
+
+# listing helpers
+alias ls='ls -F --color=auto'
+alias l='ls -lha'
+alias ll='ls -lh'
+alias la='ls -A'
+
+alias v='vim'
+
+# Hub gem
+alias git='hub'
+
+# Ruby and Rails
+alias irb='irb --simple-prompt'
+alias gl='gem list'
+
+# Rails 3
+alias reload='. ~/.bashrc'
+alias rs='script/rails server'
+alias rsd='script/rails server --debugger'
+alias rc='script/rails console'
+alias rdb='script/rails dbconsole'
+alias rg='script/rails generate'
+alias rgm='script/rails generate model'
+alias rgs='script/rails generate scaffold'
+alias rgc='script/rails generate controller'
+alias rgmi='script/rails generate migration'
+alias rd='script/rails destroy'
+alias rdm='script/rails destroy model'
+alias rds='script/rails destroy scaffold'
+alias rdc='script/rails destroy controller'
+alias rdmi='script/rails destroy migration'
+alias rp='script/rails plugin'
+alias rpi='script/rails plugin install'
+alias rru='script/rails runner'
+
+
+alias b='bundle'
+alias bu='bundle update'
+alias bi='bundle install'
+alias bs='bundle show'
+alias be='bundle exec'
+alias bp='bundle package'
+alias bo='bundle open'
+alias bl='bundle list'
+
+alias rake='time rake'
+
+alias js='jekyll --server'
+
+
+alias diff='colordiff'
+alias grep='grep --color=auto'
+alias df='df -h'
+alias glc='gcc -lGL -lGLU -lglut'
+alias gl++='g++ -lGL -lGLU -lglut'
+alias scan='iwlist ra0 scan | grep ESSID'
+alias reboot='su -c reboot'
+alias shutdown='su -c "shutdown now -h"'
+alias rmswp='find -name "*~" | xargs rm -rf'
+alias randmusic='cd && mplayer Music/*/{*.mp3,*/*.mp3} -shuffle'
+alias pet='ssh -p 1234 deploy@pet.icmc.usp.br'
+alias icmc='su -c "ifconfig ra0 up && iwconfig ra0 essid "ICMC" && dhcpcd ra0"'
+alias oraclessh='ssh -f -N renatomc@grad.icmc.usp.br -L 1521:192.168.183.2:1521'
+alias lock='xscreensaver-command --lock'
+alias mysqld='su -c "mysqld_safe &"'
+alias quit='exit'
+alias x='exit'
+alias rmswp='find -name "*~" | xargs rm -f'
+
+alias snn='snownews -l pt_BR'
+
+alias cc='cc -Wall'
+
+alias t='tree'
+alias td='tree -d'
+
+# node.js
+alias na='node app'
+
+alias rc='rvm current'
+
+alias xc='xclip -o | xclip -sel clip'
+
+alias ngx='su -c "/opt/nginx/sbin/nginx"'
+alias sngx='su -c "/opt/nginx/sbin/nginx -s stop"'
+alias rngx='su -c "/opt/nginx/sbin/nginx -s reload"'
+
+alias pgs='su -c "rc.d start postgresql"'
+alias spg='su -c "rc.d stop postgresql"'
+
+alias clock='while true; do date; printf "\033[A"; sleep 1; done'
+
+alias pb='perlbrew'

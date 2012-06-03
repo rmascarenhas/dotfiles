@@ -1,0 +1,121 @@
+#!/usr/bin/env ruby
+
+
+# This script creates a template of a tmux work environment. It is to be
+# used with the `work' script.
+# Only creates Ruby and Rails tmux templates so far.
+
+class Tmuxtrap
+
+  # For new templates, add an entry here and implement the correspondent method
+  # that returns a string of the template. The method must be named
+  # +<template_name>_template+
+  #
+  TEMPLATES = [:ruby, :rails]
+
+  def initialize(options={})
+    @template  = (options[:template]  || default_template).to_sym
+    @tmux_file = options[:tmux_file] || default_tmux_file
+  end
+
+  # This is an optionanted workflow. Assumes we are using test/unit
+  # (in the sense that it assumes a test/ directory) and guard for
+  # automated tests.
+  #
+  def ruby_template
+    <<-END
+      project=`basename "$PWD"`
+
+      tmux has-session -t "$project" 2>/dev/null
+
+      if [ $? -ne 0 ]; then
+          # Editor
+          tmux new-session -s "$project" -n editor -d
+          tmux send-keys -t "$project":1.1 "clear; vim lib/" C-m
+          tmux split-window -h -t "$project":1
+          tmux send-keys -t "$project":1.2 "clear; vim test/" C-m
+          tmux select-layout -t "$project":1 main-vertical
+
+          # Test suite
+          tmux new-window -t "$project" -n test
+          tmux send-keys -t "$project":2 "clear; guard" C-m
+
+          tmux select-window -t "$project":1
+          tmux select-pane -L -t "$project"
+      fi
+
+      tmux attach -t "$project"
+    END
+  end
+
+  # A general-purpose environment for Rails development.
+  # Assumes the use of rspec for testing (+vim+ is opened at
+  # the +spec+ directory)
+  #
+  def rails_template
+    <<-END
+      project=`basename "$PWD"`
+
+      tmux has-session -t "$project" 2>/dev/null
+
+      if [ $? -ne 0 ]; then
+          # Editor
+          tmux new-session -s "$project" -n editor -d
+          tmux send-keys -t "$project":1.1 "clear; vim app/" C-m
+          tmux split-window -h -t "$project":1
+          tmux send-keys -t "$project":1.2 "clear; vim spec/" C-m
+          tmux split-window -h -t "$project":1
+          tmux send-keys -t "$project":1.3 "clear" C-m
+          tmux select-layout -t "$project":1 even-horizontal
+
+          # Test suite
+          tmux new-window -t "$project" -n test
+          tmux send-keys -t "$project":2 "clear; guard" C-m
+
+          # Console
+          tmux new-window -t "$project" -n console
+          tmux send-keys -t "$project":3 "clear; rails c" C-m
+
+          # Log file
+          tmux new-window -t "$project" -n log
+          tmux send-keys -t "$project":4 "clear; tail -f log/development.log" C-m
+
+          tmux select-window -t "$project":1
+          tmux select-pane -L -t "$project"
+      fi
+
+      tmux attach -t "$project"
+    END
+  end
+
+  # Effectively creates the template, or raises an exception in case
+  # the template is not known. See Tmuxtrap::TEMPLATES
+  #
+  def create
+    unless TEMPLATES.include?(@template)
+      raise RuntimeError, "Unknown template: #{@template}"
+    end
+
+    File.open(@tmux_file, 'w') do |f|
+      f.write public_send(:"#{@template}_template")
+    end
+
+    File.chmod(0755, @tmux_file)
+  end
+
+  private
+
+  def default_template
+    :rails
+  end
+
+  def default_tmux_file
+    '.tmux-setup.sh'
+  end
+end
+
+
+template = ARGV.shift
+tmux_file = ARGV.shift
+
+Tmuxtrap.new(template: template, tmux_file: tmux_file).create
