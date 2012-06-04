@@ -36,6 +36,7 @@ alias rpi='script/rails plugin install'
 alias rru='script/rails runner'
 
 
+# bundler
 alias b='bundle'
 alias bu='bundle update'
 alias bi='bundle install'
@@ -44,6 +45,9 @@ alias be='bundle exec'
 alias bp='bundle package'
 alias bo='bundle open'
 alias bl='bundle list'
+
+# rbenv
+alias rr='rbenv rehash'
 
 alias rake='time rake'
 
@@ -78,8 +82,6 @@ alias td='tree -d'
 
 # node.js
 alias na='node app'
-
-alias rc='rvm current'
 
 alias xc='xclip -o | xclip -sel clip'
 
