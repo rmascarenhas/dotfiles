@@ -47,7 +47,7 @@ def create_server_info(app_name, conf_path='/opt/nginx/conf/apps')
 end
 
 def append_host_name(app_name, hosts_file='/etc/hosts')
-  File.open(hosts_file, 'a') { |f| f.write "127.0.0.1\t#{app_name}" }
+  File.open(hosts_file, 'a') { |f| f.write "\n127.0.0.1\t#{app_name}" }
 end
 
 def die(msg)
@@ -67,3 +67,6 @@ die("This isn't a Rails app, you liar!") unless rails_app?
 create_server_info(app_name)
 
 append_host_name(app_name)
+
+# ZOMG ONE MORE HARD CODES
+system "/opt/nginx/sbin/nginx -s reload"
