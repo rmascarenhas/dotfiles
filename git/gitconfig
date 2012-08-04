@@ -1,0 +1,31 @@
+[user]
+    name = Renato Mascarenhas 
+    email = renato.mascosta@gmail.com
+[alias]
+    st = status -sb
+    co = checkout
+    pl = pull origin
+    ps = push origin
+    cm = commit
+    br = branch
+    ui = update-index
+    fw = flow
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset   %f %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+    unstage = reset HEAD --
+    last = log -1 HEAD
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+[core]
+    excludesfile = ~/.gitignore
+    editor = vim
+    autocrlf = input
+[apply]
+    whitespace = nowarn
+[format]
+    pretty = %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
+[github]
+    user = rmascarenhas
+[push]
+	default = current
