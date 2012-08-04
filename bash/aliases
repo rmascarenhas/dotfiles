@@ -6,7 +6,10 @@ alias l='ls -lha'
 alias ll='ls -lh'
 alias la='ls -A'
 
+alias p='cat -n'
+
 alias v='vim'
+alias chr='chromium'
 
 # Hub gem
 alias git='hub'
@@ -91,7 +94,13 @@ alias rngx='su -c "/opt/nginx/sbin/nginx -s reload"'
 
 alias pgs='su -c "rc.d start postgresql"'
 alias spg='su -c "rc.d stop postgresql"'
+alias rpg='su -c "rc.d restart postgresql"'
 
 alias clock='while true; do date; printf "\033[A"; sleep 1; done'
 
 alias pb='perlbrew'
+
+# rdoc tags
+alias rtags='rdoc -f tags lib'
+
+alias migrate='rake db:migrate && rake db:test:prepare'

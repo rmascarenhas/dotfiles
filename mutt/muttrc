@@ -50,7 +50,7 @@ set signature='~/.signature'	# Signature (See send-hook!)
 #
 # Addresses:
 #
-set from="renato.mascosta@gmail.com"		# From: address (see send-hook my_hdr From)
+set from="renato.costa@plataformatec.com.br"		# From: address (see send-hook my_hdr From)
 
 
 #
@@ -232,14 +232,14 @@ set compose_format="-- %v-- Compose  [Approximate Message Size: %l   Attachments
 
 #
 # GMail settings
-set imap_user="renato.mascosta@gmail.com"
+set imap_user="renato.costa@plataformatec.com.br"
 set imap_pass=""
 set spoolfile="imaps://imap.gmail.com:993/INBOX"
 set folder="imaps://imap.gmail.com:993/"
 set imap_check_subscribed
 set realname="Renato Mascarenhas"
 
-set smtp_url="smtp://renato.mascosta@smtp.gmail.com:587/"
+set smtp_url="smtp://renato.costa@plataformatec.com.br@smtp.gmail.com:587/"
 set smtp_pass=""
 set ssl_force_tls=yes
 

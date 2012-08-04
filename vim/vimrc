@@ -24,6 +24,9 @@ let g:Powerline_symbols = 'unicode'
 " ack: better than grep
 let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
+" tagbar setup
+nmap <F5> :TagbarToggle<CR>
+
 call pathogen#infect()
 
 set background=dark

@@ -5,7 +5,7 @@
 #   * Using bundler (d'oh!)
 #   * Use latest rails available
 
-function napp() {
+napp() {
     if [[ "$#" == 0 ]]; then
         echo "Gimme an app name as a parameter!"
         return 1
@@ -24,7 +24,7 @@ function napp() {
     bundle install --path vendor/bundle
 
     # Create the app, overwriting Gemfile
-    yes n | bundle exec rails new .
+    yes | bundle exec rails new . -d postgresql -T
 
     # Have fun!
 }

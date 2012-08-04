@@ -5,9 +5,7 @@ source ~/.git-flow-completion.sh
 export GIT_PS1_SHOWDIRTYSTATE=y
 export GIT_PS1_SHOWSTASHSTATE=y
 
-#export PS1='[\[\033[0;36m\]\u @ \[\033[0;33m\]\h\[\033[0;m\] \W]\[\e[0;35;49m\]$(__git_ps1 " [%s]")\[\e[0;0m\]\[\033[0;10m\] \$ '
-
-export PS1='\n\[\033[0;31m\][$$:$PPID - \j:\!]\[\033[1;30m\]\[\033[0;36m\] \
+export PS1='\n\
 \[\033[1;30m\][\[\033[0;34m\]\u \
 \[\033[0;32m\]+${SHLVL}\[\033[1;30m\]] \[\e[0;35;49m\]$(__git_ps1 "[%s]")\[\e[0;0m\]\[\033[0;10m\] \
 \[\033[1;37m\]\w\[\033[0;37m\] \n▸ '
@@ -41,7 +39,7 @@ complete -cf su
 
 ## Maven
 export M2_HOME=/opt/mvn
-export PATH=$PATH:~/.bin
+export PATH=$PATH:~/.bin:/opt/vagrant/bin
 export JAVA_HOME=/usr/lib64/java/jre
 
 ##################################################
@@ -95,3 +93,12 @@ export HISTCONTROL=ignoreboth
 
 # Quick access to direct children of home directory
 export CDPATH=:$HOME
+
+#################################################
+
+# Ignore Ctrl-D once (do not exit shell)
+export IGNOREEOF=1
+
+################################################
+
+export RBENV_ROOT="$HOME/.rbenv"

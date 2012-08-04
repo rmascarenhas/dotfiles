@@ -26,7 +26,7 @@ class Tmuxtrap
     <<-END
       project=`basename "$PWD"`
 
-      tmux has-session -t "$project" 2>/dev/null
+      tmux has-session -t "$project" &>/dev/null
 
       if [ $? -ne 0 ]; then
           # Editor
@@ -38,7 +38,7 @@ class Tmuxtrap
 
           # Test suite
           tmux new-window -t "$project" -n test
-          tmux send-keys -t "$project":2 "clear; guard" C-m
+          tmux send-keys -t "$project":2 "clear; be guard" C-m
 
           tmux select-window -t "$project":1
           tmux select-pane -L -t "$project"
@@ -56,7 +56,7 @@ class Tmuxtrap
     <<-END
       project=`basename "$PWD"`
 
-      tmux has-session -t "$project" 2>/dev/null
+      tmux has-session -t "$project" &>/dev/null
 
       if [ $? -ne 0 ]; then
           # Editor
@@ -64,17 +64,15 @@ class Tmuxtrap
           tmux send-keys -t "$project":1.1 "clear; vim app/" C-m
           tmux split-window -h -t "$project":1
           tmux send-keys -t "$project":1.2 "clear; vim spec/" C-m
-          tmux split-window -h -t "$project":1
-          tmux send-keys -t "$project":1.3 "clear" C-m
           tmux select-layout -t "$project":1 even-horizontal
 
           # Test suite
           tmux new-window -t "$project" -n test
-          tmux send-keys -t "$project":2 "clear; guard" C-m
+          tmux send-keys -t "$project":2 "clear; be guard" C-m
 
           # Console
           tmux new-window -t "$project" -n console
-          tmux send-keys -t "$project":3 "clear; rails c" C-m
+          tmux send-keys -t "$project":3 "clear; be rails c" C-m
 
           # Log file
           tmux new-window -t "$project" -n log

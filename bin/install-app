@@ -50,19 +50,14 @@ def append_host_name(app_name, hosts_file='/etc/hosts')
   File.open(hosts_file, 'a') { |f| f.write "\n127.0.0.1\t#{app_name}" }
 end
 
-def die(msg)
-  puts msg
-  exit(1)
-end
 
 
 
 
-
-die("This program must be run with super user privileges.") unless root?
+abort('This program must be run with super user privileges.') unless root?
 
 app_name = ARGV[1] || app_name_from_pwd
-die("This isn't a Rails app, you liar!") unless rails_app?
+abort('This is not a Rails app, you liar!') unless rails_app?
 
 create_server_info(app_name)
 
